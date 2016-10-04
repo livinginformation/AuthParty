@@ -20,7 +20,7 @@ Client -> Server (Login, response)
 	{
 	    "Challenge": challenge,
 	    "Challenge_Signature": signature,
-	    "Public_Key": public_key,
+	    "Public_Key": public_key
 	}
 
 Server -> Client (Login, response if >1 valid account)
