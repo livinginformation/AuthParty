@@ -27,7 +27,7 @@ Server -> Client (Login, response if >1 valid account)
 
 	{
 	    "New_Challenge": new_challenge,
-	    "Accounts": ["username1", "username2", ..., "usernameN"]
+	    "Accounts": ["username1", "username2", ..., "usernameN"],
 	    "API": api_endpoint
 	}
 
@@ -40,8 +40,32 @@ Client -> Server (Login, response to multiple valid accounts)
 	    "Username": username
 	}
 
-Server -> Client (Success or Failure)
+Server -> Client (Login, Success or Failure)
 
 	{
 	    "Status": success_or_fail
+	}
+
+Server -> Client (Registration, embedded in QR)
+
+	{
+	    "Control_Code": "register",
+	    "Challenge": challenge,
+	    "API": api_endpoint,
+	    "Site_Name": website_name
+	}
+
+Client -> Server (Registration, scanned QR)
+
+	{
+	    "Challenge": challenge,
+	    "Challenge_Signature": signature,
+	    "Public_Key": public_key,
+	    "Asset_Name": asset_name
+	}
+
+Server -> Client (Registration, response)
+
+	{
+	    "Status": success_or_failure
 	}
