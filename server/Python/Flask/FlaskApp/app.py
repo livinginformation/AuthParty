@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, json, g
+from flask import Flask, render_template, request, json, g, make_response
 import sqlite3
 
 # from werkzeug import generate_password_hash, check_password_hash
@@ -39,6 +39,43 @@ def main():
 @app.route('/showSignUp')
 def showSignUp():
     return render_template('signup.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+
+    if request.method == 'GET':
+        # QR data
+        control_code = "register"
+        challenge_string = "challenge"
+        endpoint = "/register"
+
+        resp = make_response(render_template('register.html'))
+        resp.set_cookie('session', 'session_cookie')
+
+        return resp
+
+    elif request.method == 'POST':
+        print "Post request"
+
+        json = request.get_json()
+
+        _signature = json['signature']
+        _challenge = json['challenge']
+        _username = json['username']
+        _assetname = json['assetname']
+
+        print "Json:"
+        print _signature
+        print _challenge
+        print _username
+        print _assetname
+
+        resp = make_response(render_template('register.html'))
+        return resp
+
+    else:
+        print "Shouldn't be here"
+        return
 
 @app.route('/signUp', methods=['POST'])
 def signUp():
