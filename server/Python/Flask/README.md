@@ -2,7 +2,20 @@ Setup:
 
 1. Have Python and Pip installed
 2. pip install Flask
-3.OSX:
+3. install mysql
+5. CREATE DATABASE AuthParty;
+6. CREATE TABLE `AuthParty`.`tbl_user` (
+  `user_id` BIGINT UNIQUE AUTO_INCREMENT,
+  `user_name` VARCHAR(45) NULL,
+  `user_username` VARCHAR(45) NULL,
+  `user_password` VARCHAR(45) NULL,
+  PRIMARY KEY (`user_id`));
+
+7. pip install flask-mysql
+
+
+
+4.OSX:
 	1. sudo easy_install virtualenv
 	2. virtualenv [app name]
 	3. virtualenv -p /usr/bin/python env
