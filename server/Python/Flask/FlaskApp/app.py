@@ -32,6 +32,14 @@ def init_db():
 
 init_db()
 
+def verify_ownership(address, assetname):
+    # Add query (local or remote) to verify address owns provided asset
+    return True
+
+def validate_signature(challenge, signature, public_key):
+    # Add signature validation
+    return True
+
 @app.route("/")
 def main():
     return render_template('index.html')
@@ -59,16 +67,26 @@ def register():
 
         json = request.get_json()
 
-        _signature = json['signature']
-        _challenge = json['challenge']
-        _username = json['username']
-        _assetname = json['assetname']
+        signature = json['signature']
+        challenge = json['challenge']
+        username = json['username']
+        assetname = json['assetname']
+        public_key = json['public_key']
 
         print "Json:"
-        print _signature
-        print _challenge
-        print _username
-        print _assetname
+        print signature
+        print challenge
+        print username
+        print assetname
+        print public_key
+
+        if not verify_ownership(public_key, assetname):
+            print "Address does not own asset"
+            return
+
+        if not validate_signature(challenge, signature, public_key):
+            print "Signature is invalid."
+            return
 
         resp = make_response(render_template('register.html'))
         return resp
